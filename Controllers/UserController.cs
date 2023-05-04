@@ -1,43 +1,72 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Traveled_True.Models;
+using Traveled_True.Repositories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Traveled_True.Controllers
 {
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        // GET: api/<UserController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IUserRepository _userRepository;
+        public UserController(IUserRepository userRepository)
         {
-            return new string[] { "value1", "value2" };
+            _userRepository = userRepository;
         }
 
-        // GET api/<UserController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{firebaseUserId}")]
+        public IActionResult GetByFirebaseUserId(string firebaseUserId)
         {
-            return "value";
+            var user = _userRepository.GetByFirebaseUserId(firebaseUserId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
         }
 
-        // POST api/<UserController>
+        [HttpGet("Me")]
+        public IActionResult Me()
+        {
+            var user = GetCurrentUser();
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
+        [HttpGet("DoesUserExist/{firebaseUserId}")]
+        public IActionResult DoesUserExist(string firebaseUserId)
+        {
+            var user = _userRepository.GetByFirebaseUserId(firebaseUserId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
+
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Register(User user)
         {
+            // All newly registered users start out as not admins
+            user.Admin = false;
+            _userRepository.Add(user);
+            return CreatedAtAction(
+                nameof(GetByFirebaseUserId), new { firebaseUserId = user.FirebaseUserId }, user);
         }
 
-        // PUT api/<UserController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        private User GetCurrentUser()
         {
-        }
-
-        // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }
