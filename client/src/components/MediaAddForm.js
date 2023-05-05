@@ -12,6 +12,7 @@ export default function MediaAddForm() {
   const [mediaLink, setLink] = useState();
   const { id } = useParams();
   const [crime, setCrime] = useState();
+  
 
   useEffect(() => {
     getCrime(id).then(setCrime);

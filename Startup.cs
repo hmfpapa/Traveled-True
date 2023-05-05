@@ -25,6 +25,8 @@ namespace Traveled_True
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ICrimeRepository, CrimeRepository>();
             services.AddTransient<IMediaRepository, MediaRepository>();
+            services.AddTransient<ILocationRepository, LocationRepository>();
+            services.AddTransient<ITypeRepository, TypeRepository>();
 
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
             var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";

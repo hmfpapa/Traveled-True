@@ -130,7 +130,7 @@ namespace Traveled_True.Repositories
                 {
                     cmd.CommandText = @"INSERT INTO Crime (LocationId, Solved, Victim, Perpetrator, GetInvolved, TypeId, Date, Details)
                                         OUTPUT INSERTED.ID
-                                        VALUES (@LocationId, @Solved, @Victim, @Perpetrator, @GetInvolved, @TypeId, @Date)";
+                                        VALUES (@LocationId, @Solved, @Victim, @Perpetrator, @GetInvolved, @TypeId, @Date, @Details)";
                     DbUtils.AddParameter(cmd, "@LocationId", crime.LocationId);
                     DbUtils.AddParameter(cmd, "@Solved", crime.Solved);
                     DbUtils.AddParameter(cmd, "@Victim", crime.Victim);

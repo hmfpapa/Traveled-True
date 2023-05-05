@@ -5,6 +5,7 @@ import Register from "./Register";
 import CrimeList from "./CrimeList";
 import CrimeDetails from "./CrimeDetails";
 import MediaAddForm from "./MediaAddForm";
+import CrimeAddForm from "./CrimeAddForm";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -21,6 +22,10 @@ export default function ApplicationViews({ isLoggedIn }) {
         <Route
           path="crime/:id/addMedia"
           element={isLoggedIn ? <MediaAddForm /> : <Navigate to="/login" />}
+        /> 
+        <Route
+          path="crime/add"
+          element={isLoggedIn ? <CrimeAddForm /> : <Navigate to="/login" />}
         /> 
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
