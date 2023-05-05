@@ -44,11 +44,12 @@ namespace Traveled_True.Controllers
 
         // POST api/<CrimeController>
         [HttpPost]
-        //public IActionResult Add(Crime crime)
-        //{
-        //    return Ok(crime);
-        //}
-       
+        public IActionResult Add(Crime crime)
+        {
+            _crimeRepository.Add(crime);
+            return CreatedAtAction(nameof(Get), new { id = crime.Id }, crime);
+        }
+
 
         // PUT api/<CrimeController>/5
         [HttpPut("{id}")]

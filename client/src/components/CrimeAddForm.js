@@ -1,15 +1,34 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-import { addQuote } from "../modules/quoteManager";
+import { addCrime } from "../modules/crimeManager";
+import { getAllLocations } from "../modules/locationManager";
+import { useEffect } from "react";
+import { getAllTypes } from "../modules/typeManager";
 
-export default function QuoteAddForm() {
+
+export default function CrimeAddForm() {
   const navigate = useNavigate();
-  const [quoteText, setQuoteText] = useState();
+  const [crimeLocationId, setCrimeLocationId] = useState();
+  const [crimeSolved, setCrimeSolved] = useState(false);
+  const [crimeVictim, setCrimeVictim] = useState();
+  const [crimePerpetrator, setCrimePerpetrator] = useState(null);
+  const [crimeGetInvolved, setCrimeGetInvolved] = useState(null);
+  const [crimeTypeId, setCrimeTypeId] = useState();
+  const [crimeDate, setCrimeDate] = useState();
+  const [crimeDetails, setCrimeDetails] = useState();
+const [locations, setLocations] = useState([]);
+const [types, setTypes] = useState([]);
+
+useEffect(() => {
+  getAllLocations().then(setLocations);
+  getAllTypes().then((data)=>{setTypes(data);
+  });
+}, []);
 
   const submitForm = (e) => {
     e.preventDefault();
-    addQuote({ text: quoteText })
+    addCrime({ LocationId: crimeLocationId, Solved: crimeSolved, Victim: crimeVictim, Perpetrator: crimePerpetrator, GetInvolved: crimeGetInvolved, TypeId: crimeTypeId, Date: crimeDate, Details: crimeDetails })
       .then(() => navigate("/"))
       .catch((err) => alert(`An error ocurred: ${err.message}`));
   };
@@ -17,13 +36,69 @@ export default function QuoteAddForm() {
   return (
     <Form onSubmit={submitForm}>
       <FormGroup>
-        <Label for="quoteText">Quote</Label>
+        <Label for="crimeVictim">Victim Name</Label>
         <Input
-          id="quoteText"
+          id="crimeVictim"
           type="textarea"
-          onChange={(e) => setQuoteText(e.target.value)}
+          onChange={(e) => setCrimeVictim(e.target.value)}
         />
       </FormGroup>
+      <FormGroup>
+        <Label for="crimeDate">Date</Label>
+        <Input
+          id="crimeDate"
+          type="date"
+          onChange={(e) => setCrimeDate(e.target.value)}
+        />
+      </FormGroup>
+      <FormGroup>
+          <Label for="crimeLocationId">Location</Label>
+          <Input type="select"  id="crimeLocationId" onChange={(e) => setCrimeLocationId(parseInt(e.target.value))}>
+            {locations.map((l) => {
+              return <option key={l.id} value={l.id}>{l.name}</option>
+            })}
+          </Input>
+        </FormGroup>
+        <FormGroup>
+          <Label for="crimeTypeId">Type</Label>
+          <Input type="select"  id="crimeTypeId" onChange={(e) => setCrimeTypeId(parseInt(e.target.value))}>
+            {types.map((t) => {
+              return <option key={t.id} value={t.id}>{t.name}</option>
+            })}
+          </Input>
+        </FormGroup>
+      <FormGroup>
+        <Label for="crimeGetInvolved">How to Get Involved</Label>
+        <Input
+          id="crimeGetInvolved"
+          type="textarea"
+          onChange={(e) => setCrimeGetInvolved(e.target.value)}
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label for="crimeDetails">Details</Label>
+        <Input
+          id="crimeDetails"
+          type="textarea"
+          onChange={(e) => setCrimeDetails(e.target.value)}
+        />
+      </FormGroup>
+      <FormGroup check>
+          <Label for="crimeSolved">
+            <Input type="checkbox" 
+            onChange={(e) => setCrimeSolved(true)}/>{' '}
+            Solved
+          </Label>
+        </FormGroup>
+      {crimeSolved? (<FormGroup>
+        <Label for="crimePerpetrator">Perpetrator</Label>
+        <Input
+          id="crimePerpetrator"
+          type="textarea"
+          onChange={(e) => setCrimePerpetrator(e.target.value)}
+        />
+      </FormGroup>) 
+      : (<></>)}
       <FormGroup>
         <Button>Save</Button>
       </FormGroup>

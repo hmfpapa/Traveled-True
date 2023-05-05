@@ -24,7 +24,7 @@ const CrimeDetails = () => {
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-sm-12 col-lg-6">
-        <Card className="m-4">
+        <Card className="m-6">
       <CardBody>
         <strong>Victim: {crime.victim}</strong>
         <p>{crime.type}</p>
@@ -44,7 +44,7 @@ const CrimeDetails = () => {
                 </ListGroupItem>
             ))}
           </ListGroup>
-         {user?.admin? (<Link to={`/`}>Add Media</Link>): (<></>)}
+         <div>{user?.admin? (<Link to={`addMedia`}>Add Media</Link>): (<></>)}</div>
         </div>
       </div>
     </div>
