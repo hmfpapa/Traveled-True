@@ -3,8 +3,8 @@ import { ListGroup, ListGroupItem } from "reactstrap";
 import { useParams } from "react-router-dom";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
-import { getCrime } from "../modules/crimeManager";
-import { me } from "../modules/authManager";
+import { getCrime } from "../../modules/crimeManager";
+import { me } from "../../modules/authManager";
 
 const CrimeDetails = () => {
   const [crime, setCrime] = useState();

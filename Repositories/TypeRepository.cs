@@ -16,7 +16,7 @@ namespace Traveled_True.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Id, Name FROM Type";
+                    cmd.CommandText = "SELECT Id, Name FROM Type ORDER BY Name";
 
                     var types = new List<Type>();
 

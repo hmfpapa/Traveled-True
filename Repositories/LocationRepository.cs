@@ -16,7 +16,7 @@ namespace Traveled_True.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Id, Name FROM Location";
+                    cmd.CommandText = "SELECT Id, Name FROM Location ORDER BY Name";
 
                     var locations = new List<Location>();
 

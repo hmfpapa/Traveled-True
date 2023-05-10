@@ -2,12 +2,16 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
-import CrimeList from "./CrimeList";
-import CrimeDetails from "./CrimeDetails";
+import CrimeList from "./Crimes/CrimeList";
+import CrimeDetails from "./Crimes/CrimeDetails";
 import MediaAddForm from "./MediaAddForm";
-import CrimeAddForm from "./CrimeAddForm";
+import CrimeAddForm from "./Crimes/CrimeAddForm";
+import ItineraryList from "./Itineraries/ItineraryList";
+import { DeleteItinerary } from "./Itineraries/DeleteItinerary";
+import ItineraryForm from "./Itineraries/ItineraryForm";
+import { ItineraryEditForm } from "./Itineraries/ItineraryEdit";
 
-export default function ApplicationViews({ isLoggedIn }) {
+export default function ApplicationViews({ isLoggedIn, userProfile }) {
   return (
     <Routes>
       <Route path="/">
@@ -26,6 +30,22 @@ export default function ApplicationViews({ isLoggedIn }) {
         <Route
           path="crime/add"
           element={isLoggedIn ? <CrimeAddForm /> : <Navigate to="/login" />}
+        /> 
+        <Route
+          path="myItineraries"
+          element={isLoggedIn ? <ItineraryList userProfile={userProfile}/> : <Navigate to="/login" />}
+        /> 
+        <Route
+          path="myItineraries/edit/:id"
+          element={isLoggedIn ? <ItineraryEditForm/> : <Navigate to="/login" />}
+        /> 
+        <Route
+          path="createItinerary"
+          element={isLoggedIn ? <ItineraryForm userProfile={userProfile}/> : <Navigate to="/login" />}
+        /> 
+        <Route
+          path="deleteItinerary/:id"
+          element={isLoggedIn ? <DeleteItinerary/> : <Navigate to="/login" />}
         /> 
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

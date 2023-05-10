@@ -33,7 +33,7 @@ export const getCrime = (id) => {
         return resp.json();
       } else {
         throw new Error(
-          "An unknown error occurred while trying to get quotes.",
+          "An unknown error occurred while trying to get crimes.",
         );
       }
     });
@@ -57,6 +57,44 @@ export const addCrime = (crime) => {
       } else {
         throw new Error(
           "An unknown error occurred while trying to save a new crime.",
+        );
+      }
+    });
+  });
+};
+
+export const getCrimesByLocation = (id) => {
+  return getToken().then((token) => {
+    return fetch(`${apiUrl}/location/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error(
+          "An unknown error occurred while trying to get crimes.",
+        );
+      }
+    });
+  });
+};
+
+export const getCrimesByItinerary = (id) => {
+  return getToken().then((token) => {
+    return fetch(`${apiUrl}/itinerary/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error(
+          "An unknown error occurred while trying to get crimes.",
         );
       }
     });

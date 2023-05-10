@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Crime from "./Crime";
-import { getAllCrimes } from "../modules/crimeManager";
+import { getAllCrimes } from "../../modules/crimeManager";
 
 export default function CrimeList() {
   const [crimes, setCrimes] = useState([]);

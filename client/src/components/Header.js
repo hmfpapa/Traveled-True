@@ -32,6 +32,21 @@ export default function Header({ isLoggedIn, userProfile }) {
                   </NavLink>
                 </NavItem>
                 <NavItem>
+                  <NavLink tag={RRNavLink} to="/myItineraries">
+                    My Itineraries
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink tag={RRNavLink} to="/createItinerary">
+                    Create New Itinerary
+                  </NavLink>
+                </NavItem>
+                 {  userProfile?.admin? (<NavItem>
+                  <NavLink tag={RRNavLink} to="/crime/add">
+                    Add Crime
+                  </NavLink>
+                </NavItem>):(<></>)}  
+                <NavItem>
                   <a
                     aria-current="page"
                     className="nav-link"
@@ -42,7 +57,7 @@ export default function Header({ isLoggedIn, userProfile }) {
                   </a>
                 </NavItem>
               </>
-            )}
+                )}
             {!isLoggedIn && (
               <>
                 <NavItem>

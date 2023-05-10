@@ -8,7 +8,7 @@ using Traveled_True.Repositories;
 
 namespace Traveled_True.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase

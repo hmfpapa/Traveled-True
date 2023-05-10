@@ -20,7 +20,7 @@ namespace Traveled_True.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = CrimeQuery;
+                    cmd.CommandText = CrimeQuery + " ORDER BY c.Date DESC";
 
                     var crimes = new List<Crime>();
 
@@ -114,9 +114,117 @@ namespace Traveled_True.Repositories
                                 });
                             }
                         }
-                        
+
                         return crime;
                     }
+                }
+            }
+        }
+
+        public List<Crime> GetByLocation(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = CrimeQuery + " WHERE c.locationId = @Id  ORDER BY c.Date";
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                    var crimes = new List<Crime>();
+
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        var crimeId = DbUtils.GetInt(reader, "Id");
+
+                        var existingCrime = crimes.FirstOrDefault(p => p.Id == crimeId);
+                        if (existingCrime == null)
+                        {
+                            existingCrime = new Crime()
+                            {
+                                Id = DbUtils.GetInt(reader, "Id"),
+                                LocationId = DbUtils.GetInt(reader, "LocationId"),
+                                Location = DbUtils.GetString(reader, "location"),
+                                Solved = DbUtils.GetBool(reader, "Solved"),
+                                Victim = DbUtils.GetString(reader, "Victim"),
+                                Perpetrator = DbUtils.GetString(reader, "Perpetrator"),
+                                GetInvolved = DbUtils.GetString(reader, "GetInvolved"),
+                                Date = DbUtils.GetDateTime(reader, "Date"),
+                                Type = DbUtils.GetString(reader, "type"),
+                                TypeId = DbUtils.GetInt(reader, "TypeId"),
+                                Details = DbUtils.GetString(reader, "Details"),
+                                Medias = new List<Media>()
+                            };
+
+                            crimes.Add(existingCrime);
+                        }
+
+                        if (DbUtils.IsNotDbNull(reader, "MediaId"))
+                        {
+                            existingCrime.Medias.Add(new Media()
+                            {
+                                Id = DbUtils.GetInt(reader, "MediaId"),
+                                Link = DbUtils.GetString(reader, "Link"),
+                                CrimeId = crimeId,
+                                Description = DbUtils.GetString(reader, "Description")
+                            });
+                        }
+                    }
+
+                    return crimes;
+                }
+            }
+        }
+        public List<Crime> GetByItinerary(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT
+                         ic.CrimeId, ic.ItineraryId,
+                        c.Id, c.LocationId, c.Solved, c.TypeId, c.Victim, c.Perpetrator, c.GetInvolved, c.Date, c.Details,
+                                l.Name as location, 
+                                t.Name as type
+                                FROM ItineraryCrime ic
+                                LEFT JOIN Crime c on ic.CrimeId = c.Id
+                                LEFT JOIN Location l on l.Id = c.LocationId
+                                LEFT JOIN Type t on t.Id = c.TypeId
+                        WHERE ic.ItineraryId = @Id  ORDER BY c.Date";
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                    var crimes = new List<Crime>();
+
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        var crimeId = DbUtils.GetInt(reader, "Id");
+                        var existingCrime = crimes.FirstOrDefault(p => p.Id == crimeId);
+                        if (existingCrime == null)
+                        {
+                            existingCrime = new Crime()
+                            {
+                                Id = DbUtils.GetInt(reader, "Id"),
+                                LocationId = DbUtils.GetInt(reader, "LocationId"),
+                                Location = DbUtils.GetString(reader, "location"),
+                                Solved = DbUtils.GetBool(reader, "Solved"),
+                                Victim = DbUtils.GetString(reader, "Victim"),
+                                Perpetrator = DbUtils.GetString(reader, "Perpetrator"),
+                                GetInvolved = DbUtils.GetString(reader, "GetInvolved"),
+                                Date = DbUtils.GetDateTime(reader, "Date"),
+                                Type = DbUtils.GetString(reader, "type"),
+                                TypeId = DbUtils.GetInt(reader, "TypeId"),
+                                Details = DbUtils.GetString(reader, "Details"),
+                                Medias = new List<Media>()
+                            };
+                            crimes.Add(existingCrime);
+                        }
+                    }
+                    return crimes;
                 }
             }
         }

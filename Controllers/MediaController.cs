@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Traveled_True.Models;
 using Traveled_True.Repositories;
 
@@ -6,6 +7,7 @@ using Traveled_True.Repositories;
 
 namespace Traveled_True.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MediaController : ControllerBase
