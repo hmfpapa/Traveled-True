@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Security.Claims;
 using Traveled_True.Models;
 using Traveled_True.Repositories;
@@ -9,7 +10,7 @@ using Traveled_True.Repositories;
 
 namespace Traveled_True.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CrimeController : ControllerBase
@@ -42,6 +43,12 @@ namespace Traveled_True.Controllers
             return Ok(crime);
         }
 
+        [HttpGet("location/{id}")]
+        public IActionResult GetByLocation(int id)
+        {
+            return Ok(_crimeRepository.GetByLocation(id));
+        }
+
         // POST api/<CrimeController>
         [HttpPost]
         public IActionResult Add(Crime crime)
@@ -50,11 +57,10 @@ namespace Traveled_True.Controllers
             return CreatedAtAction(nameof(Get), new { id = crime.Id }, crime);
         }
 
-
-        // PUT api/<CrimeController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpGet("itinerary/{id}")]
+        public IActionResult GetByItinerary(int id)
         {
+            return Ok(_crimeRepository.GetByItinerary(id));
         }
 
         // DELETE api/<CrimeController>/5

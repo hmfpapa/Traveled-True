@@ -27,7 +27,7 @@ export default function MediaAddForm() {
 
   return (
     <Form onSubmit={submitForm}>
-        <h2>Add Media related to the {crime.type} of {crime.victim}</h2>
+        <h2>Add Media related to the {crime?.type} of {crime?.victim}</h2>
       <FormGroup>
         <Label for="mediaDescription">Description</Label>
         <Input

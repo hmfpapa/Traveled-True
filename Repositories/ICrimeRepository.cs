@@ -8,5 +8,7 @@ namespace Traveled_True.Repositories
         void Add(Crime crime);
         List<Crime> GetAll();
         object GetById(int id);
+        public List<Crime> GetByLocation(int id);
+        public List<Crime> GetByItinerary(int id);
     }
 }

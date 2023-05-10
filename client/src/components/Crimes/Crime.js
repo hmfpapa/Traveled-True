@@ -10,7 +10,7 @@ export default function Crime({ crime }) {
         <p>{crime.type}</p>
         <p>{crime.date}</p>
         <p>{crime.location}</p>
-        <Link to={`crime/${crime.id}`}>Details</Link>
+        <Link to={`/crime/${crime.id}`}>Details</Link>
       </CardBody>
     </Card>
   );

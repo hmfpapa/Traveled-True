@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-import { addCrime } from "../modules/crimeManager";
-import { getAllLocations } from "../modules/locationManager";
+import { addCrime } from "../../modules/crimeManager";
+import { getAllLocations } from "../../modules/locationManager";
 import { useEffect } from "react";
-import { getAllTypes } from "../modules/typeManager";
+import { getAllTypes } from "../../modules/typeManager";
 
 
 export default function CrimeAddForm() {
@@ -54,6 +54,7 @@ useEffect(() => {
       <FormGroup>
           <Label for="crimeLocationId">Location</Label>
           <Input type="select"  id="crimeLocationId" onChange={(e) => setCrimeLocationId(parseInt(e.target.value))}>
+          <option value="">Select Location</option>
             {locations.map((l) => {
               return <option key={l.id} value={l.id}>{l.name}</option>
             })}
@@ -61,7 +62,9 @@ useEffect(() => {
         </FormGroup>
         <FormGroup>
           <Label for="crimeTypeId">Type</Label>
+          
           <Input type="select"  id="crimeTypeId" onChange={(e) => setCrimeTypeId(parseInt(e.target.value))}>
+            <option value="">Select Type</option>
             {types.map((t) => {
               return <option key={t.id} value={t.id}>{t.name}</option>
             })}
