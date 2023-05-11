@@ -11,7 +11,6 @@ export const ItineraryEditForm = () => {
   const [itinerary, setItinerary] = useState(null);
   const { id } = useParams();
   const [itineraryCrimes, setItineraryCrimes] = useState([])
-  const navigate = useNavigate();
   const [updatedInfo, setUpdatedInfo] = useState(false);
 
   useEffect(() => {

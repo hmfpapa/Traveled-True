@@ -19,7 +19,8 @@ export default function Header({ isLoggedIn, userProfile }) {
     <div>
       <Navbar color="dark" dark expand="md">
         <NavbarBrand tag={RRNavLink} to="/">
-          Traveled + True
+        <img src="https://res.cloudinary.com/dggkcaqhs/image/upload/v1683751008/Capstone/TT_Logo2_kn0jzw.png" alt="Traveled + True"
+        height = "50"/>
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
@@ -27,7 +28,7 @@ export default function Header({ isLoggedIn, userProfile }) {
             {isLoggedIn && (
               <>
                 <NavItem>
-                  <NavLink tag={RRNavLink} to="/">
+                  <NavLink tag={RRNavLink} to="/allCrimes">
                     All Crimes
                   </NavLink>
                 </NavItem>

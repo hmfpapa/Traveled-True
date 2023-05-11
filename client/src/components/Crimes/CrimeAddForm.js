@@ -17,6 +17,7 @@ export default function CrimeAddForm() {
   const [crimeTypeId, setCrimeTypeId] = useState();
   const [crimeDate, setCrimeDate] = useState();
   const [crimeDetails, setCrimeDetails] = useState();
+  const [crimeImageUrl, setCrimeImageUrl] = useState();
 const [locations, setLocations] = useState([]);
 const [types, setTypes] = useState([]);
 
@@ -28,8 +29,8 @@ useEffect(() => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    addCrime({ LocationId: crimeLocationId, Solved: crimeSolved, Victim: crimeVictim, Perpetrator: crimePerpetrator, GetInvolved: crimeGetInvolved, TypeId: crimeTypeId, Date: crimeDate, Details: crimeDetails })
-      .then(() => navigate("/"))
+    addCrime({ LocationId: crimeLocationId, Solved: crimeSolved, Victim: crimeVictim, Perpetrator: crimePerpetrator, GetInvolved: crimeGetInvolved, TypeId: crimeTypeId, Date: crimeDate, Details: crimeDetails, ImageUrl: crimeImageUrl })
+      .then(() => navigate("/allCrimes"))
       .catch((err) => alert(`An error ocurred: ${err.message}`));
   };
 
@@ -70,6 +71,22 @@ useEffect(() => {
             })}
           </Input>
         </FormGroup>
+        <FormGroup>
+        <Label for="crimeDetails">Details</Label>
+        <Input
+          id="crimeDetails"
+          type="textarea"
+          onChange={(e) => setCrimeDetails(e.target.value)}
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label for="crimeImageUrl">ImageUrl</Label>
+        <Input
+          id="crimeImageUrl"
+          type="textarea"
+          onChange={(e) => setCrimeImageUrl(e.target.value)}
+        />
+      </FormGroup>
       <FormGroup>
         <Label for="crimeGetInvolved">How to Get Involved</Label>
         <Input
@@ -78,14 +95,7 @@ useEffect(() => {
           onChange={(e) => setCrimeGetInvolved(e.target.value)}
         />
       </FormGroup>
-      <FormGroup>
-        <Label for="crimeDetails">Details</Label>
-        <Input
-          id="crimeDetails"
-          type="textarea"
-          onChange={(e) => setCrimeDetails(e.target.value)}
-        />
-      </FormGroup>
+      
       <FormGroup check>
           <Label for="crimeSolved">
             <Input type="checkbox" 
