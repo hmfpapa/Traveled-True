@@ -46,6 +46,7 @@ namespace Traveled_True.Repositories
                                 Type = DbUtils.GetString(reader, "type"),
                                 TypeId = DbUtils.GetInt(reader, "TypeId"),
                                 Details = DbUtils.GetString(reader, "Details"),
+                                ImageUrl = DbUtils.GetString(reader,"ImageUrl"),
                                 Medias = new List<Media>()
                             };
 
@@ -100,6 +101,7 @@ namespace Traveled_True.Repositories
                                     Type = DbUtils.GetString(reader, "type"),
                                     TypeId = DbUtils.GetInt(reader, "TypeId"),
                                     Details = DbUtils.GetString(reader, "Details"),
+                                    ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
                                     Medias = new List<Media>()
                                 };
                             }
@@ -155,6 +157,7 @@ namespace Traveled_True.Repositories
                                 Type = DbUtils.GetString(reader, "type"),
                                 TypeId = DbUtils.GetInt(reader, "TypeId"),
                                 Details = DbUtils.GetString(reader, "Details"),
+                                ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
                                 Medias = new List<Media>()
                             };
 
@@ -186,7 +189,7 @@ namespace Traveled_True.Repositories
                 {
                     cmd.CommandText = @"SELECT
                          ic.CrimeId, ic.ItineraryId,
-                        c.Id, c.LocationId, c.Solved, c.TypeId, c.Victim, c.Perpetrator, c.GetInvolved, c.Date, c.Details,
+                        c.Id, c.LocationId, c.Solved, c.TypeId, c.Victim, c.Perpetrator, c.GetInvolved, c.Date, c.Details, c.ImageUrl,
                                 l.Name as location, 
                                 t.Name as type
                                 FROM ItineraryCrime ic
@@ -219,6 +222,7 @@ namespace Traveled_True.Repositories
                                 Type = DbUtils.GetString(reader, "type"),
                                 TypeId = DbUtils.GetInt(reader, "TypeId"),
                                 Details = DbUtils.GetString(reader, "Details"),
+                                ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
                                 Medias = new List<Media>()
                             };
                             crimes.Add(existingCrime);
@@ -236,9 +240,9 @@ namespace Traveled_True.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO Crime (LocationId, Solved, Victim, Perpetrator, GetInvolved, TypeId, Date, Details)
+                    cmd.CommandText = @"INSERT INTO Crime (LocationId, Solved, Victim, Perpetrator, GetInvolved, TypeId, Date, Details, ImageUrl)
                                         OUTPUT INSERTED.ID
-                                        VALUES (@LocationId, @Solved, @Victim, @Perpetrator, @GetInvolved, @TypeId, @Date, @Details)";
+                                        VALUES (@LocationId, @Solved, @Victim, @Perpetrator, @GetInvolved, @TypeId, @Date, @Details, @ImageUrl)";
                     DbUtils.AddParameter(cmd, "@LocationId", crime.LocationId);
                     DbUtils.AddParameter(cmd, "@Solved", crime.Solved);
                     DbUtils.AddParameter(cmd, "@Victim", crime.Victim);
@@ -247,6 +251,7 @@ namespace Traveled_True.Repositories
                     DbUtils.AddParameter(cmd, "@TypeId", crime.TypeId);
                     DbUtils.AddParameter(cmd, "@Date", crime.Date);
                     DbUtils.AddParameter(cmd, "@Details", crime.Details);
+                    DbUtils.AddParameter(cmd, "@ImageUrl", crime.ImageUrl);
                     crime.Id = (int)cmd.ExecuteScalar();
                 }
             }
@@ -256,7 +261,7 @@ namespace Traveled_True.Repositories
         {
             get
             {
-                return @"SELECT c.Id, c.LocationId, c.Solved, c.TypeId, c.Victim, c.Perpetrator, c.GetInvolved, c.Date, c.Details,
+                return @"SELECT c.Id, c.LocationId, c.Solved, c.TypeId, c.Victim, c.Perpetrator, c.GetInvolved, c.Date, c.Details, c.ImageUrl,
                                 l.Name as location, 
                                 t.Name as type,
                                 m.Id as MediaId, m.link, m.description

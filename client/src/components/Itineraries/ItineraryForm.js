@@ -36,7 +36,7 @@ export default function ItineraryForm({ userProfile }) {
                 </Input>
             </FormGroup>
             <FormGroup>
-                <Button>Start your itinerary</Button>
+                <Button>Start your journey</Button>
             </FormGroup>
         </Form>
  

@@ -21,7 +21,7 @@ namespace Traveled_True.Repositories
                 {
                     cmd.CommandText = @"SELECT 
                                         i.UserId, i.Id as itineraryId, i.LocationId,
-                                        c.Id as crimeId, c.Victim, c.TypeId, c.Date, c.Solved,
+                                        c.Id as crimeId, c.Victim, c.TypeId, c.Date, c.Solved, c.ImageUrl,
                                         l.Name as locationName,
                                         t.Name as typeName
                                         FROM Itinerary i
@@ -73,6 +73,7 @@ namespace Traveled_True.Repositories
                                 Date = DbUtils.GetDateTime(reader, "Date"),
                                 Solved = DbUtils.GetBool(reader, "Solved"),
                                 Location = DbUtils.GetString(reader, "locationName"),
+                                ImageUrl = DbUtils.GetString(reader, "ImageUrl")
                             });
                         }
                     }
@@ -90,7 +91,7 @@ namespace Traveled_True.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"SELECT i.UserId, i.Id as itineraryId, i.LocationId,
-                                        c.Id as crimeId, c.Victim, c.TypeId, c.Date,
+                                        c.Id as crimeId, c.Victim, c.TypeId, c.Date, c.ImageUrl,
                                         l.Name as locationName,
                                         t.Name as typeName
                                         FROM Itinerary i
@@ -135,6 +136,7 @@ namespace Traveled_True.Repositories
                                     Type = DbUtils.GetString(reader, "typeName"),
                                     Date = DbUtils.GetDateTime(reader, "Date"),
                                     Location = DbUtils.GetString(reader, "locationName"),
+                                    ImageUrl = DbUtils.GetString(reader, "ImageUrl")
                                 });
                             }
                         }

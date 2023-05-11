@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ListGroup, ListGroupItem } from "reactstrap";
 import { useParams } from "react-router-dom";
-import { Card, CardBody } from "reactstrap";
+import { Card, CardBody, CardImg } from "reactstrap";
 import { Link } from "react-router-dom";
 import { getCrime } from "../../modules/crimeManager";
 import { me } from "../../modules/authManager";
@@ -21,20 +21,33 @@ const CrimeDetails = () => {
   }
 
   return (
-    <div className="container">
+    <div className="m-4">
       <div className="row justify-content-center">
         <div className="col-sm-12 col-lg-6">
-        <Card className="m-6">
-      <CardBody>
-        <strong>Victim: {crime.victim}</strong>
-        <p>{crime.type}</p>
-        <p>{crime.date}</p>
-        <p>{crime.location}</p>
+        <Card>
+  <CardBody>
+    <div className="row">
+      <div className="col-md-8 d-flex p-5">
+        <div className="row justify-content-start">
+          <strong>Victim: {crime.victim}</strong>
+          <p>{crime.type}</p>
+          <p>{crime.date}</p>
+          <p>{crime.location}</p>
+        </div>
+      </div>
+      <div className="col-md-4">
+        <CardImg src={crime.imageUrl} alt={crime.victim} className="align-self-center" />
+      </div>
+    </div>
+    <div className="row justify-content-center">
+      <div className="col-md-8">
         <p>{crime.details}</p>
         {crime.solved? (<><p> Solved </p> <p>Perpetrator: {crime.perpetrator}</p></>) : (<p>Currently unsolved</p>)}
-        <strong>Get Involved </strong><p>{crime.getInvolved}</p>
-      </CardBody>
-    </Card>
+        {crime.getInvolved? (<><strong>Get Involved </strong><p>{crime.getInvolved}</p></>) : (<></>)}
+      </div>
+    </div>
+  </CardBody>
+</Card>
           <ListGroup>
             <strong>Media</strong>
             {crime.medias.map((m) => (

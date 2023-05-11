@@ -17,5 +17,6 @@ namespace Traveled_True.Models
         public int TypeId { get; set; }
         public List<Media> Medias { get; set; }
         public string Details { get; set; }
+        public string ImageUrl { get; set; }
     }
 }
