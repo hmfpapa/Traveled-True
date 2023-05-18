@@ -1,10 +1,11 @@
 import React from "react";
 import { Card, CardBody, CardImg } from "reactstrap";
 import { Link } from "react-router-dom";
+import "./Crime.css"
 
 export default function Crime({ crime }) {
   return (
-    <div className="row justify-content-center ">
+    <div className="row justify-content-center  ">
         <div className="col-sm-10 col-lg-10">
     <Card className="m-4 ">
       <CardBody>

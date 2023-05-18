@@ -17,7 +17,8 @@ export default function ItineraryList({userProfile}) {
 
   return (
     <section>
-      <h1>My Saved Itineraries</h1>
+      <h1>My Saved Destinations
+      </h1>
       {itineraries?.map((i) => (
         <><Itinerary key={i.id} itinerary={i} />
          <Link to={`/deleteItinerary/${i.id}`}>Delete {i.location.name} Itinerary</Link><br/>
