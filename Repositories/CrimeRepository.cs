@@ -257,6 +257,44 @@ namespace Traveled_True.Repositories
             }
         }
 
+        public void Update(Crime crime)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            UPDATE Crime
+                            SET 
+                            LocationId = @location,
+                            Solved = @solved,
+                            Victim = @victim,
+                            Perpetrator = @perpetrator,
+                            GetInvolved = @getInvolved,
+                            TypeId = @typeId,
+                            Date = @date,
+                            Details = @details,
+                            ImageUrl = @imageUrl
+                           WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@location", crime.LocationId);
+                    cmd.Parameters.AddWithValue("@solved", crime.Solved);
+                    cmd.Parameters.AddWithValue("@victim", crime.Victim);
+                    cmd.Parameters.AddWithValue("@perpetrator", crime.Perpetrator);
+                    cmd.Parameters.AddWithValue("@getInvolved", crime.GetInvolved);
+                    cmd.Parameters.AddWithValue("@typeId", crime.TypeId);
+                    cmd.Parameters.AddWithValue("@date", crime.Date);
+                    cmd.Parameters.AddWithValue("@details", crime.Details);
+                    cmd.Parameters.AddWithValue("@imageUrl", crime.ImageUrl);
+                    cmd.Parameters.AddWithValue("@id", crime.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private string CrimeQuery
         {
             get

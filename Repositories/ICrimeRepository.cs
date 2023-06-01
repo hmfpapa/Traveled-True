@@ -10,5 +10,6 @@ namespace Traveled_True.Repositories
         object GetById(int id);
         public List<Crime> GetByLocation(int id);
         public List<Crime> GetByItinerary(int id);
+        public void Update(Crime crime);
     }
 }

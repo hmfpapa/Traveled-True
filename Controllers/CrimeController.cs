@@ -63,6 +63,14 @@ namespace Traveled_True.Controllers
             return Ok(_crimeRepository.GetByItinerary(id));
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Put(Crime crime)
+        {
+            _crimeRepository.Update(crime);
+            return Ok();
+
+        }
+
         // DELETE api/<CrimeController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
