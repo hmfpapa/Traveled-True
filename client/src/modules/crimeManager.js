@@ -100,3 +100,17 @@ export const getCrimesByItinerary = (id) => {
     });
   });
 };
+
+export const updateCrime = (crime) => {
+  return getToken().then((token) => {
+      return fetch(`${apiUrl}/${crime.id}`, {
+          method: "PUT",
+          headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(crime)
+      })
+      .then((res) => res)    
+  })
+}
