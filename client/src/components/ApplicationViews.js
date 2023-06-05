@@ -11,6 +11,7 @@ import { DeleteItinerary } from "./Itineraries/DeleteItinerary";
 import ItineraryForm from "./Itineraries/ItineraryForm";
 import { ItineraryEditForm } from "./Itineraries/ItineraryEdit";
 import LandingPage  from "./LandingPage";
+import { CrimeEditForm } from "./Crimes/CrimeEditForm";
 
 export default function ApplicationViews({ isLoggedIn, userProfile }) {
   return (
@@ -35,6 +36,10 @@ export default function ApplicationViews({ isLoggedIn, userProfile }) {
         <Route
           path="crime/add"
           element={isLoggedIn ? <CrimeAddForm /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="crime/edit/:id"
+          element={isLoggedIn ? <CrimeEditForm/> : <Navigate to="/login" />}
         />
         <Route
           path="myItineraries"

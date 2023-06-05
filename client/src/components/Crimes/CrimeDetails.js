@@ -57,7 +57,7 @@ const CrimeDetails = () => {
                 </ListGroupItem>
             ))}
           </ListGroup>
-         <div>{user?.admin? (<Link to={`addMedia`}>Add Media</Link>): (<></>)}</div>
+         <div>{user?.admin? (<><Link to={`addMedia`}>Add Media</Link><br/> <Link to={`/crime/edit/${id}`}>Edit Crime</Link></>): (<></>)}</div>
         </div>
       </div>
     </div>
