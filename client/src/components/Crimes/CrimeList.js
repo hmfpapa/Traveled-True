@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Crime from "./Crime";
 import { getAllCrimes } from "../../modules/crimeManager";
 
+
 export default function CrimeList() {
   const [crimes, setCrimes] = useState([]);
 
@@ -12,7 +13,8 @@ export default function CrimeList() {
   return (
     <section>
       {crimes.map((c) => (
-        <Crime key={c.id} crime={c} />
+        <><Crime key={c.id} crime={c} />
+        </>
       ))}
     </section>
   );
