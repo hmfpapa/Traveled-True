@@ -56,10 +56,9 @@ export const CrimeEditForm = () => {
                                 onChange={handleInputChange} />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="date">Date</Label>
                             <Input
                                 id="date" name="date" value={crime.date}
-                                type="date"
+                                type="hidden"
                                 onChange={handleInputChange}
                             />
                         </FormGroup>

@@ -5,6 +5,7 @@ import { Card, CardBody, CardImg } from "reactstrap";
 import { Link } from "react-router-dom";
 import { getCrime } from "../../modules/crimeManager";
 import { me } from "../../modules/authManager";
+import moment from "moment";
 
 const CrimeDetails = () => {
   const [crime, setCrime] = useState();
@@ -20,6 +21,9 @@ const CrimeDetails = () => {
     return null;
   }
 
+  let crimeDate = moment(crime.date).format('MMM DD, YYYY')
+
+
   return (
     <div className="m-4">
       <div className="row justify-content-center">
@@ -31,7 +35,7 @@ const CrimeDetails = () => {
         <div className="row justify-content-start">
           <strong>Victim: {crime.victim}</strong>
           <p>{crime.type}</p>
-          <p>{crime.date}</p>
+          <p>{crimeDate}</p>
           <p>{crime.location}</p>
         </div>
       </div>

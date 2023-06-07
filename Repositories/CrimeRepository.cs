@@ -42,7 +42,7 @@ namespace Traveled_True.Repositories
                                 Victim = DbUtils.GetString(reader, "Victim"),
                                 Perpetrator = DbUtils.GetString(reader, "Perpetrator"),
                                 GetInvolved = DbUtils.GetString(reader, "GetInvolved"),
-                                Date = DbUtils.GetDateTime(reader, "Date"),
+                                Date = ((DbUtils.GetDateTime(reader, "Date")).Date),
                                 Type = DbUtils.GetString(reader, "type"),
                                 TypeId = DbUtils.GetInt(reader, "TypeId"),
                                 Details = DbUtils.GetString(reader, "Details"),
