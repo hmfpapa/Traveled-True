@@ -70,6 +70,64 @@ namespace Traveled_True.Repositories
             }
         }
 
+        public List<Crime> GetByType(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = CrimeQuery + "WHere TypeId = @id ORDER BY c.Date DESC";
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                    var crimes = new List<Crime>();
+
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        var crimeId = DbUtils.GetInt(reader, "Id");
+
+                        var existingCrime = crimes.FirstOrDefault(p => p.Id == crimeId);
+                        if (existingCrime == null)
+                        {
+                            existingCrime = new Crime()
+                            {
+                                Id = DbUtils.GetInt(reader, "Id"),
+                                LocationId = DbUtils.GetInt(reader, "LocationId"),
+                                Location = DbUtils.GetString(reader, "location"),
+                                Solved = DbUtils.GetBool(reader, "Solved"),
+                                Victim = DbUtils.GetString(reader, "Victim"),
+                                Perpetrator = DbUtils.GetString(reader, "Perpetrator"),
+                                GetInvolved = DbUtils.GetString(reader, "GetInvolved"),
+                                Date = ((DbUtils.GetDateTime(reader, "Date")).Date),
+                                Type = DbUtils.GetString(reader, "type"),
+                                TypeId = DbUtils.GetInt(reader, "TypeId"),
+                                Details = DbUtils.GetString(reader, "Details"),
+                                ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
+                                Medias = new List<Media>()
+                            };
+
+                            crimes.Add(existingCrime);
+                        }
+
+                        if (DbUtils.IsNotDbNull(reader, "MediaId"))
+                        {
+                            existingCrime.Medias.Add(new Media()
+                            {
+                                Id = DbUtils.GetInt(reader, "MediaId"),
+                                Link = DbUtils.GetString(reader, "Link"),
+                                CrimeId = crimeId,
+                                Description = DbUtils.GetString(reader, "Description")
+                            });
+                        }
+                    }
+
+                    return crimes;
+                }
+            }
+        }
+
         public object GetById(int id)
         {
             using (var conn = Connection)
