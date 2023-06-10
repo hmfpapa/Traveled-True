@@ -10,7 +10,7 @@ using Traveled_True.Repositories;
 
 namespace Traveled_True.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CrimeController : ControllerBase
@@ -29,6 +29,12 @@ namespace Traveled_True.Controllers
         public IActionResult Get()
         {
             return Ok(_crimeRepository.GetAll());
+        }
+
+        [HttpGet("type/{id}")]
+        public IActionResult GetByType(int id)
+        {
+            return Ok(_crimeRepository.GetByType(id));
         }
 
         // GET api/<CrimeController>/5

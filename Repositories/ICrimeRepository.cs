@@ -11,5 +11,7 @@ namespace Traveled_True.Repositories
         public List<Crime> GetByLocation(int id);
         public List<Crime> GetByItinerary(int id);
         public void Update(Crime crime);
+        public List<Crime> GetByType(int id);
+
     }
 }
