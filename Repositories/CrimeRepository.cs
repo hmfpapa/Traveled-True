@@ -77,8 +77,8 @@ namespace Traveled_True.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = CrimeQuery + "WHere TypeId = @id ORDER BY c.Date DESC";
-                    DbUtils.AddParameter(cmd, "@Id", id);
+                    cmd.CommandText = CrimeQuery + " WHERE c.TypeId = @id ORDER BY c.Date DESC";
+                    DbUtils.AddParameter(cmd, "@id", id);
 
                     var crimes = new List<Crime>();
 
