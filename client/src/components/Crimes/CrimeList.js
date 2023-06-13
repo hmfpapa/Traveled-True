@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import Crime from "./Crime";
 import { getAllCrimes, getCrimesByType } from "../../modules/crimeManager";
 import { getAllTypes } from "../../modules/typeManager";
-import { Form } from "react-router-dom";
-import { FormGroup, Input, Label } from "reactstrap";
+import { FormGroup, Input } from "reactstrap";
 
 export default function CrimeList() {
   const [crimes, setCrimes] = useState([]);
@@ -16,8 +15,11 @@ export default function CrimeList() {
   }, []);
 
   useEffect(() => {
-    if (typeId != 0){
-      getCrimesByType(typeId);
+    if (typeId != 0) {
+      getCrimesByType(typeId).then(setCrimes);
+    }
+    else {
+      getAllCrimes().then(setCrimes);
     }
   }, [typeId]);
 
@@ -25,18 +27,16 @@ export default function CrimeList() {
 
     <section>
       <h1>Crimes You Should Know About</h1>
-      Select a type:<Form onSubmit={handleSave}>
-        <FormGroup>
-          <Label for="typeId">Type</Label>
 
-          <Input type="select" id="crimeTypeId" onChange={(e) => setTypeId(parseInt(e.target.value))}>
-            <option value="">Select Type</option>
-            {types.map((t) => {
-              return <option key={t.id} value={t.id}>{t.name}</option>
-            })}
-          </Input>
-        </FormGroup>
-      </Form>
+      <FormGroup>
+        <Input type="select" id="crimeTypeId" onChange={(e) => setTypeId(parseInt(e.target.value))}>
+          <option value="">Select a type</option>
+          {types.map((t) => {
+            return <option key={t.id} value={t.id}>{t.name}</option>
+          })}
+          <option value= "0">View All</option>
+        </Input>
+      </FormGroup>
       {crimes.map((c) => (
         <><Crime key={c.id} crime={c} />
         </>
