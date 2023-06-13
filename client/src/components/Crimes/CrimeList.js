@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from "react";
 import Crime from "./Crime";
-import { getAllCrimes } from "../../modules/crimeManager";
+import { getAllCrimes, getCrimesByType } from "../../modules/crimeManager";
 import { getAllTypes } from "../../modules/typeManager";
+import { Form } from "react-router-dom";
+import { FormGroup, Input, Label } from "reactstrap";
 
 export default function CrimeList() {
   const [crimes, setCrimes] = useState([]);
   const [types, setTypes] = useState([]);
-  const [typeId, setTypeId] = useState();
+  const [typeId, setTypeId] = useState(0);
 
   useEffect(() => {
     getAllCrimes().then(setCrimes);
     getAllTypes().then(setTypes);
   }, []);
 
+  useEffect(() => {
+    if (typeId != 0){
+      getCrimesByType(typeId);
+    }
+  }, [typeId]);
 
   return (
 
