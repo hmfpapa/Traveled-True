@@ -40,6 +40,25 @@ export const getCrime = (id) => {
   });
 };
 
+export const getCrimesByType = (id) => {
+  return getToken().then((token) => {
+    return fetch(`${apiUrl}/type/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error(
+          "An unknown error occurred while trying to get crimes.",
+        );
+      }
+    });
+  });
+};
+
 export const addCrime = (crime) => {
   return getToken().then((token) => {
     return fetch(apiUrl, {
