@@ -24,7 +24,13 @@ export default function Header({ isLoggedIn, userProfile }) {
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
+       
           <Nav className="mr-auto" navbar>
+          {userProfile && (
+              <NavItem>
+                <NavLink>Welcome, {userProfile.name}!</NavLink>
+              </NavItem>
+            )}
             {isLoggedIn && (
               <>
                 <NavItem>
@@ -34,14 +40,10 @@ export default function Header({ isLoggedIn, userProfile }) {
                 </NavItem>
                 <NavItem>
                   <NavLink tag={RRNavLink} to="/myItineraries">
-                    My Itineraries
+                    My Journeys
                   </NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink tag={RRNavLink} to="/createItinerary">
-                    Create New Itinerary
-                  </NavLink>
-                </NavItem>
+                
                  {  userProfile?.admin? (<NavItem>
                   <NavLink tag={RRNavLink} to="/crime/add">
                     Add Crime
@@ -76,11 +78,7 @@ export default function Header({ isLoggedIn, userProfile }) {
           </Nav>
           <Nav navbar>
             
-            {userProfile && (
-              <NavItem>
-                <NavLink>Welcome, {userProfile.name}!</NavLink>
-              </NavItem>
-            )}
+            
           </Nav>
         </Collapse>
       </Navbar>

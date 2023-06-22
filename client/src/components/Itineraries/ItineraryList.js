@@ -19,12 +19,14 @@ export default function ItineraryList({userProfile}) {
     <section>
       <h1>My Saved Destinations
       </h1>
+      <Link to={`/createItinerary`}>Start a New Journey</Link>
       {itineraries?.map((i) => (
         <><Itinerary key={i.id} itinerary={i} />
-         <Link to={`/deleteItinerary/${i.id}`}>Delete {i.location.name} Itinerary</Link><br/>
-         <Link to={`edit/${i.id}`}>Edit {i.location.name} Itinerary</Link>
+         <Link to={`/deleteItinerary/${i.id}`}>Delete {i.location.name} Journey</Link><br/>
+         <Link to={`edit/${i.id}`}>Edit {i.location.name} Journey</Link><br/>
          </>
       ))}
+     
     </section>
   );
 }
