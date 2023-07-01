@@ -26,7 +26,7 @@ export default function Header({ isLoggedIn, userProfile }) {
         <Collapse isOpen={isOpen} navbar>
        
           <Nav className="mr-auto" navbar>
-          { && (
+          {userProfile && (
               <NavItem>
                 <NavLink>Welcome, {userProfile.name}!</NavLink>
               </NavItem>
